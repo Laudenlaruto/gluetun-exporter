@@ -26,7 +26,7 @@ func (s *Server) Collect() {
 		if s.username != "" && s.password != "" {
 			req.SetBasicAuth(s.username, s.password)
 		} else if s.apikey != "" {
-			req.Header.Set("Authorization", "Bearer "+s.apikey)
+			req.Header.Set("X-API-Key", s.apikey)
 		}
 
 		resp, err := client.Do(req)
