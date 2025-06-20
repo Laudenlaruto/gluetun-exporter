@@ -78,6 +78,10 @@ Contributions are welcome! Please feel free to open an issue or submit a pull re
 > [!IMPORTANT]
 > Please fork from the `dev` branch to include any un-released changes.
 
+## 🚀 Stay Connected
+
+* [Discord](https://discord.gg/z54hWyGcam)
+
 ## License
 
 This project is licensed under the MIT license. See the [LICENSE](LICENSE) file for details.
