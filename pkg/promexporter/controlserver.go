@@ -1,9 +1,10 @@
 package promexporter
 
 import (
-	"github.com/prometheus/client_golang/prometheus"
-	"github.com/thecfu/gluetun-exporter/pkg/gluetun/types"
 	"strconv"
+
+	"github.com/laudenlaruto/gluetun-exporter/pkg/gluetun/types"
+	"github.com/prometheus/client_golang/prometheus"
 )
 
 var (

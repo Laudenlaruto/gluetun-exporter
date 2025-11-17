@@ -2,19 +2,20 @@ package gluetun
 
 import (
 	"encoding/json"
-	"github.com/thecfu/gluetun-exporter/pkg/gluetun/types"
-	"github.com/thecfu/gluetun-exporter/pkg/promexporter"
 	"net/http"
 	"os"
+
+	"github.com/laudenlaruto/gluetun-exporter/pkg/gluetun/types"
+	"github.com/laudenlaruto/gluetun-exporter/pkg/promexporter"
 )
 
 func (s *Server) Collect() {
 	client := &http.Client{}
 
 	urls := map[string]func(*http.Response){
-		s.url + "/v1/vpn/status":            handleStatus,
-		s.url + "/v1/publicip/ip":           handlePublicIP,
-		s.url + "/v1/openvpn/portforwarded": handlePortForward,
+		s.url + "/v1/vpn/status":  handleStatus,
+		s.url + "/v1/publicip/ip": handlePublicIP,
+		s.url + "/v1/portforward": handlePortForward,
 	}
 
 	for url, handler := range urls {

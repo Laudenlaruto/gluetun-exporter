@@ -1,13 +1,14 @@
 package main
 
 import (
-	"github.com/qdm12/log"
-	"github.com/thecfu/gluetun-exporter/pkg/gluetun"
-	"github.com/thecfu/gluetun-exporter/pkg/linkstats"
-	"github.com/thecfu/gluetun-exporter/pkg/promexporter"
 	"os"
 	"strconv"
 	"time"
+
+	"github.com/laudenlaruto/gluetun-exporter/pkg/gluetun"
+	"github.com/laudenlaruto/gluetun-exporter/pkg/linkstats"
+	"github.com/laudenlaruto/gluetun-exporter/pkg/promexporter"
+	"github.com/qdm12/log"
 )
 
 func main() {
