@@ -78,32 +78,3 @@ jobs:
           subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
           subject-digest: ${{ steps.push-standalone.outputs.digest }}
           push-to-registry: true
-
-      - name: Extract metadata (tags, labels) for Docker of the Bundled Version
-        id: meta-bundled
-        uses: docker/metadata-action@369eb591f429131d6889c46b94e711f089e6ca96
-        with:
-          images: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          flavor: |
-            latest=false
-          tags: |
-            type=semver,pattern={{version}}-bundled
-            type=semver,pattern={{major}}.{{minor}}-bundled
-            type=semver,pattern={{major}}-bundled
-      - name: Build and push Docker Bundled image
-        id: push-bundled
-        uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
-        with:
-          context: .
-          file: ./Dockerfile-bundled
-          push: true
-          platforms: linux/amd64,linux/arm64
-          tags: ${{ steps.meta-bundled.outputs.tags }}
-          labels: ${{ steps.meta-bundled.outputs.labels }}
-      - name: Generate artifact attestation for GHCR.io
-        uses: actions/attest-build-provenance@v1
-        with:
-          subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
-          subject-digest: ${{ steps.push-bundled.outputs.digest }}
-          push-to-registry: true

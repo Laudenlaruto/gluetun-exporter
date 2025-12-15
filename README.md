@@ -31,21 +31,6 @@ docker run -it -p 8001:8001\
   gluetun-exporter:standalone
 ```
 
-### Bundled
-
-The Exporter can be deployed Bundled with Gluetun self, the docker Image get builded around the Gluetun Image and will run in the Background. </br>
-In this Installation the Troughput of the Tunnel is available, it get's collected with the Usage of [netlink](github.com/vishvananda/netlink) and the Link Statistics.
-
-```bash
-docker build -t gluetun-exporter:bundled --file Dockerfile-bundled .
-docker run -it -p 8001:8001\
-  -e GLUETUN_URL=http://localhost:8000\
-  -e EXPORTER_INTERVAL=30\
-  -e GLUETUN_APIKEY=apikey\
-  --cap-add net_admin\
-  gluetun-exporter:bundled
-```
-
 ## Configuration
 
 The Configuration is currently only available via the Environment Vars:

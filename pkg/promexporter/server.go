@@ -1,17 +1,18 @@
 package promexporter
 
 import (
-	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"github.com/qdm12/log"
 	"net/http"
 	"os"
+
+	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"github.com/qdm12/log"
 )
 
 var (
 	logger = log.New(log.SetLevel(log.LevelInfo), log.SetComponent("gluetun-exporter"))
 )
 
-func Serve(bundled bool) {
+func Serve() {
 	port := os.Getenv("EXPORTER_PORT")
 	if port == "" {
 		port = "8001"
@@ -19,9 +20,6 @@ func Serve(bundled bool) {
 
 	logger.Info("Registering metrics...")
 	RegisterControlServerMetrics()
-	if bundled {
-		RegisterLinkStats()
-	}
 
 	http.Handle("/metrics", promhttp.Handler())
 	err := http.ListenAndServe(":"+port, nil)

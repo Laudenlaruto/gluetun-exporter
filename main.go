@@ -2,11 +2,9 @@ package main
 
 import (
 	"os"
-	"strconv"
 	"time"
 
 	"github.com/laudenlaruto/gluetun-exporter/pkg/gluetun"
-	"github.com/laudenlaruto/gluetun-exporter/pkg/linkstats"
 	"github.com/laudenlaruto/gluetun-exporter/pkg/promexporter"
 	"github.com/qdm12/log"
 )
@@ -20,12 +18,6 @@ func main() {
 		exporterInterval = "60" // Default to 60 seconds if not provided
 	}
 
-	// Get Interface Name from ENV Variable
-	interfaceName := os.Getenv("VPN_INTERFACE")
-	if interfaceName == "" {
-		interfaceName = "tun0"
-	}
-
 	// Convert the interval to an integer
 	interval, err := time.ParseDuration(exporterInterval + "s")
 	if err != nil {
@@ -33,17 +25,10 @@ func main() {
 		os.Exit(1)
 	}
 
-	bundledStr := os.Getenv("EXPORTER_BUNDLED")
-	bundled, err := strconv.ParseBool(bundledStr)
-	if err != nil {
-		bundled = false
-		logger.Warnf("Invalid EXPORTER_BUNDLED value, defaulting to false: %v", err)
-	}
-
 	// Start the Prometheus exporter server in a background goroutine
 	go func() {
 		logger.Info("Starting prometheus exporter...")
-		promexporter.Serve(bundled)
+		promexporter.Serve()
 	}()
 
 	// Start the metric collection loop
@@ -54,9 +39,6 @@ func main() {
 	for range ticker.C {
 		// Collect metrics from the control server
 		logger.Info("Updating Metrics...")
-		if bundled {
-			linkstats.Scrape(interfaceName)
-		}
 		controlServer.Collect()
 		logger.Info("Updated Metrics")
 	}
